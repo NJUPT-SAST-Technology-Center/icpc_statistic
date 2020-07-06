@@ -22,6 +22,8 @@ async fn get_incomming_contests(redis: web::Data<Addr<RedisActor>>) -> Result<Ht
         Ok(RespValue::Array(xs)) => {
             if xs.len() == 0 {
                 contests = request_incomming_contests().await;
+                contests.sort_by(|a, b| a.start_time_seconds.cmp(&b.start_time_seconds));
+                
                 let res: Vec<Result<RespValue, AWError>> = 
                     join_all(contests.clone().into_iter().map(|contest| {
                         redis.send(Command(resp_array!["SADD", "incomming_contest", serde_json::to_string(&contest).unwrap()]))
