@@ -7,6 +7,8 @@ To build ICPC Statistic, you need to install Rust at first, see [official instru
 
 You need to install [Redis](https://redis.io/) in your device and open it at default port.
 
+Now change `.env.example` to `.env` with your own settings.
+
 Then excute following commands:
 
 ```shell
